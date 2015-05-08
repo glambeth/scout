@@ -1,5 +1,5 @@
 # scout
-SMS Alerts if your BTCs move wallets
+SMS Alerts if your Bitcoins move wallets
 
 ## Deployment
 `node server.js`
