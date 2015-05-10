@@ -15,13 +15,20 @@ function createToken(user) {
 }
 
 module.exports = function(app, express) {
-	//signup logic
-	
-
-
-
-
-
-
+	var api = express.Router();
+	api.post('/signup', function(req, res) {
+		var user = new User({
+			phone: req.body.phone,
+			username: req.body.username,
+			password: req.body.password
+		});
+		user.save(function(err) {
+			if (err) {
+				res.send(err);
+				return;
+			}
+			res.json({ message: "User has been created"});
+		});
+	});
 
 }
