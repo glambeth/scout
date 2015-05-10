@@ -19,8 +19,11 @@ mongoose.connect(config.database, function(err) {
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
-
 app.use(express.static(__dirname));
+
+app.get('', function(req, res) {
+	res.sendFile(__dirname + '/public/views/index.html');
+});
 
 app.listen(3000, function(err) {
 	if (err) {
@@ -29,6 +32,8 @@ app.listen(3000, function(err) {
 		console.log("listening on port 3000");
 	}
 }); 
+
+
 
 
 
