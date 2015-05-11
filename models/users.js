@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt-nodejs');
 
 var UserSchema = new Schema({
 	phone: {type: String, required: true, index: {uique: true}},
@@ -26,6 +26,17 @@ UserSchema.pre("save", function(next) {
 UserSchema.methods.comparePassword = function(password) {
 	var user = this; 
 	return bcrypt.compareSync(password, user.password);
+}
+
+UserSchema.methods.addWallet = function(wallet) {
+	var user = this;
+	user.update({$push: {"wallets" : wallet}}, function(err) {
+		if (err) { 
+			console.log(err);
+		} else {
+			console.log('wallet added');
+		}
+	});
 }
 
 module.exports = mongoose.model("User", UserSchema);
