@@ -1,4 +1,4 @@
-var User = require('../models/user');
+var User = require('../models/users');
 var config = require('../config');
 var jsonwebtoken = require('jsonwebtoken');
 var secretKey = config.secretKey;
@@ -6,7 +6,7 @@ var secretKey = config.secretKey;
 function createToken(user) {
 	var token = jsonwebtoken.sign({
 		id: user._id,
-		phone: user.phone;
+		phone: user.phone,
 		username: user.username
 	}, secretKey, {
 		expiresInMinute: 14460
@@ -54,4 +54,6 @@ module.exports = function(app, express) {
 			}
 		});
 	});
+
+	return api;
 }
