@@ -78,17 +78,7 @@ module.exports = function(app, express) {
 		})
 
 		.get(function(req, res) {
-			Story.find({creator: req.decoded.id}, function(err, stories) {
-				if (err) {
-					res.send("error");
-					return;
-				}
-				res.json(stories);
-			});
+
 		});
-
-
-
 	return api;
-
 }
