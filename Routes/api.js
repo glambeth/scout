@@ -79,8 +79,13 @@ module.exports = function(app, express) {
 		})
 
 		.get(function(req, res) {
-
+			User.find({__id: req.decoded.id}, function(err, users) {
+				if (err) {
+					res.send(err);
+					return;
+				}
+				res.json(users);
+			});
 		});
-
 	return api;
 }
