@@ -74,11 +74,13 @@ module.exports = function(app, express) {
 
 	api.route('/')
 		.post(function(req, res) {
-
+			var user = User.findOne({ __id: req.decoded.id })
+			user.addWallet(req.body.wallet);
 		})
 
 		.get(function(req, res) {
 
 		});
+
 	return api;
 }
