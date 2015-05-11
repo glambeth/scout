@@ -31,4 +31,27 @@ module.exports = function(app, express) {
 		});
 	});
 
+	api.post("/login", function(req, res) {
+		User.findOne({ username: req.body.username }).select("password").exec(function(err, user) {
+			if (err) {
+				throw err;
+			}
+			if (!user) {
+				res.send({message: "User Does not exist"});
+			} else if (user) {
+				var validPassword = user.comparePassword(req.body.password);
+				if (!validPassword) {
+					res.send({message: "Invalid Password"});
+				} else {
+					//create a token for the user
+					var token = createToken(user);
+					res.json({
+						success: true,
+						message: "Sucessful login",
+						token: token
+					});
+				}
+			}
+		});
+	});
 }
