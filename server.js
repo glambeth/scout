@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan')
 var config = require('./config');
 var mongoose = require("mongoose");
+var api = require('./Routes/api')
 var app = express();
 
 
@@ -19,12 +20,16 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(express.static(__dirname));
-var api = require('./Routes/api')(app, express);
 app.use('/api', api);
 
 
 app.get('', function(req, res) {
 	res.sendFile(__dirname + '/public/views/index.html');
+	console.log("HI")
+});
+
+app.get('/dog', function(req, res) {
+	console.log("DOG")
 });
 
 app.listen(3000, function(err) {
