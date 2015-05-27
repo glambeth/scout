@@ -87,5 +87,5 @@ api.route('/')
 			res.json(users);
 		});
 	});
-	
-moudle.exports = api;
+
+module.exports = api;
