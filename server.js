@@ -28,10 +28,6 @@ app.get('', function(req, res) {
 	console.log("HI")
 });
 
-app.get('/dog', function(req, res) {
-	console.log("DOG")
-});
-
 app.listen(3000, function(err) {
 	if (err) {
 		console.log(err);  
