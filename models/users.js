@@ -6,7 +6,7 @@ var UserSchema = new Schema({
 	phone: {type: String, required: true, index: {uique: true}},
 	username: {type: String, required: true, index: {unique: true}},
 	password: {type: String, required: true, select: false}, //select false dont query password
-	wallets: {type: [], required: true}
+	wallets: {type: [], required: false}
 });
 
 UserSchema.pre("save", function(next) {
@@ -30,12 +30,13 @@ UserSchema.methods.comparePassword = function(password) {
 
 UserSchema.methods.addWallet = function(wallet) {
 	var user = this;
-	user.update({$push: {"wallets" : wallet}}, function(err) {
-		if (err) { 
-			console.log(err);
-		} else {
-			console.log('wallet added');
+	user.wallets.push(wallet);
+	user.save(function(err) {
+		if (err) {
+			res.send(err);
+			return;
 		}
+		res.json({ message: "User has been created"});
 	});
 }
 
