@@ -74,8 +74,15 @@ api.use(function(req, res, next){
 
 api.route('/')
 	.post(function(req, res) {
-		var user = User.findOne({ __id: req.decoded.id })
-		user.addWallet(req.body.wallet);
+		User.findOne({ _id: req.decoded.id }, function(err, user) {
+			if (err){
+				res.send(err);
+				return;
+			}
+			console.log(user);
+			user.addWallet(req.body.wallet);
+			res.send({wallet: req.body.wallet, user: user});
+		});
 	})
 
 	.get(function(req, res) {

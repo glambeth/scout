@@ -33,10 +33,8 @@ UserSchema.methods.addWallet = function(wallet) {
 	user.wallets.push(wallet);
 	user.save(function(err) {
 		if (err) {
-			res.send(err);
 			return;
 		}
-		res.json({ message: "User has been created"});
 	});
 }
 
