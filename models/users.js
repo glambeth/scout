@@ -38,4 +38,14 @@ UserSchema.methods.addWallet = function(wallet) {
 	});
 }
 
+UserSchema.methods.removeWallet = function(wallet) {
+	var user = this;
+	user.wallets.pull(wallet);
+	user.save(function(err) {
+		if (err) { 
+			return;
+		}
+	});
+}
+
 module.exports = mongoose.model("User", UserSchema);

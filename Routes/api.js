@@ -93,6 +93,17 @@ api.route('/')
 			}
 			res.json(users);
 		});
+	})
+
+	.delete(function(req, res) {
+		User.findOne({ _id: req.decoded.id }, function(err, user) {
+			if (err) {
+				res.send(err);
+				return;
+			}
+			user.removeWallet(req.body.wallet);
+			res.json(user);
+		});	
 	});
 
 module.exports = api;
