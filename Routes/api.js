@@ -2,12 +2,12 @@ var express = require('express')
 var User = require('../models/users');
 var config = require('../config');
 var jsonwebtoken = require('jsonwebtoken');
-//var chain = require('chain-node');
+var chain = require('chain-node');
 var secretKey = config.secretKey;
 var api = express.Router();
 
-//chain.apiKeyId = '8f84a0b8a17796d205c580134ee4dd97';
-//chain.apiKeySecret = 'fdf8e20dfacfd77b04766efec1ac12b3';
+//chain.apiKeyId = 'KEY_ID';
+//chain.apiKeySecret = 'YOUR_SECRET_KEY';
 
 
 function createToken(user) {
@@ -61,7 +61,10 @@ api.post("/login", function(req, res) {
 });
 
 api.post('/chain', function(req, res) {
+	User.find({wallets: req.body.address}, function(err, users) {
+		res.send(users);
 
+	});
 
 });
 
@@ -91,14 +94,13 @@ api.route('/')
 			}
 			console.log(user);
 			user.addWallet(req.body.wallet);
-			//chain.createNotification({type: "address", block_chain: "bitcoin", address: req.body.wallet, url: })
-
-
-
-
-
-
-			res.send({wallet: req.body.wallet, user: user});
+			chain.createNotification({type: "address", block_chain: "bitcoin", address: req.body.wallet, url:"www.scout.io/api/chain"}, function(err, res) {
+				if (err) {
+					res.send(err);
+				} else {
+					res.send(res);
+				}
+			});
 		});
 	})
 
