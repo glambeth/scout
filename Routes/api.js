@@ -6,8 +6,8 @@ var chain = require('chain-node');
 var secretKey = config.secretKey;
 var api = express.Router();
 
-//chain.apiKeyId = 'KEY_ID';
-//chain.apiKeySecret = 'YOUR_SECRET_KEY';
+chain.apiKeyId = 'KEY_ID';
+chain.apiKeySecret = 'YOUR_SECRET_KEY';
 
 
 function createToken(user) {
@@ -63,7 +63,6 @@ api.post("/login", function(req, res) {
 api.post('/chain', function(req, res) {
 	User.find({wallets: req.body.address}, function(err, users) {
 		res.send(users);
-
 	});
 
 });
@@ -94,7 +93,7 @@ api.route('/')
 			}
 			console.log(user);
 			user.addWallet(req.body.wallet);
-			chain.createNotification({type: "address", block_chain: "bitcoin", address: req.body.wallet, url:"www.scout.io/api/chain"}, function(err, res) {
+			chain.createNotification({type: "address", block_chain: "bitcoin", address: req.body.wallet, url: "http://www." + req.hostname + "/api/chain"}, function(err, res) {
 				if (err) {
 					res.send(err);
 				} else {

@@ -22,7 +22,7 @@ app.use('/api', api);
 
 app.get('', function(req, res) {
 	res.sendFile(__dirname + '/public/views/index.html');
-	console.log("HI")
+	console.log("http://www." + req.hostname + "/api/chain")
 });
 
 app.listen(3000, function(err) {
