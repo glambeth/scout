@@ -2,8 +2,13 @@ var express = require('express')
 var User = require('../models/users');
 var config = require('../config');
 var jsonwebtoken = require('jsonwebtoken');
+//var chain = require('chain-node');
 var secretKey = config.secretKey;
 var api = express.Router();
+
+//chain.apiKeyId = '8f84a0b8a17796d205c580134ee4dd97';
+//chain.apiKeySecret = 'fdf8e20dfacfd77b04766efec1ac12b3';
+
 
 function createToken(user) {
 	var token = jsonwebtoken.sign({
@@ -55,6 +60,11 @@ api.post("/login", function(req, res) {
 	});	
 });
 
+api.post('/chain', function(req, res) {
+
+
+});
+
 api.use(function(req, res, next){
 	console.log("Somebody came to the app");
 	var token = req.body.token || req.param("token") || req.headers["x-access-token"];
@@ -81,6 +91,13 @@ api.route('/')
 			}
 			console.log(user);
 			user.addWallet(req.body.wallet);
+			//chain.createNotification({type: "address", block_chain: "bitcoin", address: req.body.wallet, url: })
+
+
+
+
+
+
 			res.send({wallet: req.body.wallet, user: user});
 		});
 	})
